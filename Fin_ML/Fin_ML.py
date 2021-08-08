@@ -53,6 +53,9 @@ def predict_single_sentiment(loaded_model):
 def predict_batch_sentiment(loaded_model, sentences):
 
     preds = loaded_model.predict(sentences)
-    
     label_dict = {0:"neutral", 1:"negative", 2:"positive"}
-    return label_dict[np.argmax(preds)], np.max(preds)
+    predictions = [np.argmax(x) for x in preds]
+    sentiments = [label_dict[x] for x in predictions]
+    scores = [np.max(x) for x in preds]
+    
+    return sentences, sentiments, scores
