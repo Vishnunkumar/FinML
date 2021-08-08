@@ -1,13 +1,16 @@
+import os
 import numpy as np
 import tensorflow as tf
 import tensorflow_hub as hub
 import tensorflow_text as text
 import pandas as pd
+import gdown
 from sklearn import model_selection, metrics
+
 
 def get_data(path):
 
-    df = pd.read_csv('input/sentiment-analysis-for-financial-news/all-data.csv', header = None)
+    df = pd.read_csv(path, header = None)
     df.columns = ['label', 'text']
     c = len(set(df['label'].values))
     
@@ -31,8 +34,11 @@ def classifier_model(preprocess_layer, encoder_layer, c):
     return model
 
 
-def load_classifier_model(l_path):
-
+def load_classifier_model():
+    
+    url = 'https://drive.google.com/uc?id=1CFk7Zh6qbh6t48_eU0L1bcxnva81TQE5'
+    l_path = '/tmp/model.h5'
+    gdown.download(url, l_path, quiet=False)
     loaded_model = tf.keras.models.load_model(l_path, custom_objects={'KerasLayer': hub.KerasLayer})    
     return loaded_model
 
