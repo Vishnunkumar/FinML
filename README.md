@@ -17,3 +17,8 @@ prints -- ('negative', 0.9195326)
 ```
 
 P.S : I will add comparisons with other sentiment analysis tool soon.
+
+## Coming soon
+
+- Training functionality for classification models
+- Exploring on NER, text generation and will be adding soon in the future
