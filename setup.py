@@ -8,7 +8,7 @@ setup(
   author = 'Vishnu N',                   # Type in your name
   author_email = 'vishnunkumar25@gmail.com',      # Type in your E-Mail
   url = 'https://github.com/Vishnunkumar/FinML/',   # Provide either the link to your github or to your website
-  download_url ='https://github.com/Vishnunkumar/FinML/archive/refs/tags/v_01.tar.gz',    # I explain this later on
+  download_url ='https://github.com/Vishnunkumar/FinML/archive/refs/tags/v-1.tar.gz',    # I explain this later on
   keywords = ['Finance', 'Machine learning', 'NLP', 'Deep learning', 'Computer Vision'],   # Keywords that define your package best
   install_requires=[            # I get to this in a second
           'tensorflow==2.4.1',
