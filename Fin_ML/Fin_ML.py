@@ -42,10 +42,17 @@ def load_classifier_model():
     loaded_model = tf.keras.models.load_model(l_path, custom_objects={'KerasLayer': hub.KerasLayer})    
     return loaded_model
 
-def predict_classes(loaded_model):
+def predict_single_sentiment(loaded_model):
 	
     input_text = input()
     preds = loaded_model.predict([input_text])
+    
+    label_dict = {0:"neutral", 1:"negative", 2:"positive"}
+    return label_dict[np.argmax(preds)], np.max(preds)
+
+def predict_batch_sentiment(loaded_model, sentences):
+
+    preds = loaded_model.predict(sentences)
     
     label_dict = {0:"neutral", 1:"negative", 2:"positive"}
     return label_dict[np.argmax(preds)], np.max(preds)
