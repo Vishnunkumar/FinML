@@ -69,6 +69,7 @@ def get_stock_predictions(stock, days_to_get, value_to_get):
 	model = Prophet(seasonality_mode="multiplicative", daily_seasonality=True)
 	model.fit(df)
 	future = model.make_future_dataframe(periods=days_to_get)
+	print("Making predictions")
 	forecast = model.predict(future)
 
 	return forecast[['ds', 'yhat']]
