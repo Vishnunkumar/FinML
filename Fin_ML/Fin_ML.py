@@ -52,7 +52,7 @@ def predict_batch_sentiment(loaded_model, sentences):
     preds = loaded_model.predict(sentences)
     return sentences, preds
 
-def get_stock_predictions(stock, days_to_get, value_to_get):
+def get_stock_predictions_prophet(stock, days_to_get, value_to_get):
 	
 	now = datetime.datetime.today()
 	date = now.strftime("%Y-%m-%d")
@@ -74,5 +74,20 @@ def get_stock_predictions(stock, days_to_get, value_to_get):
 
 	return forecast[['ds', 'yhat']]
 
+def get_stock_predictions_hwes(stock, days_to_get, value_to_get):
 
+  now = datetime.datetime.today()
+  date = now.strftime("%Y-%m-%d")
+  delta = datetime.timedelta(days=45)
+  start = now - delta
+  start = start.strftime("%Y-%m-%d")
+  data = yf.download(stock, start=start, end=date)
+
+  data['date'] = date.index
+  data.index = list(range(0, data.shape[0]))
+  model = holtwinters.ExponentialSmoothing(data[value_to_get], seasonal='multiplicative', 
+                              trend='multiplicative', seasonal_periods=7)
+  model_fit = model.fit()
+  values = model_fit.forecast(days_to_get)
+  return values.values
 
