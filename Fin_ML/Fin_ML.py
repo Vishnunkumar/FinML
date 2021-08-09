@@ -9,6 +9,7 @@ import yfinance as yf
 import datetime
 from fbprophet import Prophet
 from sklearn import model_selection, metrics
+from statsmodels.tsa import holtwinters
 
 def get_data(path):
 
