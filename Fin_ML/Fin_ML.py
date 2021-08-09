@@ -10,12 +10,10 @@ from sklearn import model_selection, metrics
 
 def get_data(path):
 
-    df = pd.read_csv(path, header = None)
-    df.columns = ['label', 'text']
-    c = len(set(df['label'].values))
-    
-    return df, c
-
+	df = pd.read_csv(path, header = None)
+	df.columns = ['label', 'text']
+	c = len(set(df['label'].values))
+	return df, c
 
 def classifier_model(preprocess_layer, encoder_layer, c):
     
@@ -30,9 +28,7 @@ def classifier_model(preprocess_layer, encoder_layer, c):
     x = tf.keras.layers.Dropout(0.5)(x)
     softmax_output = tf.keras.layers.Dense(c, activation='softmax')(x)
     model = tf.keras.Model(text_input, softmax_output)
-    
     return model
-
 
 def load_classifier_model():
     
@@ -45,8 +41,7 @@ def load_classifier_model():
 def predict_single_sentiment(loaded_model):
 	
     input_text = input()
-    preds = loaded_model.predict([input_text])
-    
+    preds = loaded_model.predict([input_text])    
     label_dict = {0:"neutral", 1:"negative", 2:"positive"}
     return label_dict[np.argmax(preds)], np.max(preds)
 
@@ -54,3 +49,27 @@ def predict_batch_sentiment(loaded_model, sentences):
 
     preds = loaded_model.predict(sentences)
     return sentences, preds
+
+def get_stock_predictions(stock, days_to_get, value_to_get):
+	
+	now = datetime.datetime.today()
+	date = now.strftime("%Y-%m-%d")
+	delta = datetime.timedelta(days=120)
+	start = now - delta
+	start = start.strftime("%Y-%m-%d")
+	data = yf.download(stock, start=start, end=date)
+
+	data['ds'] = data.index
+	data['y'] = data[value_to_get]
+	df = data[['ds', 'y']]
+
+	print("Modeling the data using Prophet")
+	model = Prophet(seasonality_mode="multiplicative", daily_seasonality=True)
+	model.fit(df)
+	future = model.make_future_dataframe(periods=days_to_get)
+	forecast = model.predict(future)
+
+	return forecast[['ds', 'yhat']]
+
+
+
