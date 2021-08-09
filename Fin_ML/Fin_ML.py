@@ -5,8 +5,10 @@ import tensorflow_hub as hub
 import tensorflow_text as text
 import pandas as pd
 import gdown
+import yfinance as yf
+import datetime
+from fbprophet import Prophet
 from sklearn import model_selection, metrics
-
 
 def get_data(path):
 
