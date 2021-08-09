@@ -14,6 +14,12 @@ prediction = Fin_ML.predict_classes(loaded_model)
 Eg : Investors beware — vaccines aren’t a silver bullet for markets
 prediction
 prints -- ('negative', 0.9195326)
+
+# Stocks forecasting using Exponential Smoothing ("stock", "days to forecast", "Values - ['Open', 'High', 'Low', 'Close', 'Adj Close', 'Volume']")
+stocks = Fin_ML.get_stock_predictions_hwes("TSLA", 7, "Close")
+
+# Stocks forecasting using Prophet ("stock", "days to forecast", "Values - ['Open', 'High', 'Low', 'Close', 'Adj Close', 'Volume']")
+stocks = Fin_ML.get_stock_predictions_prophet("TSLA", 7, "Close")
 ```
 
 P.S : I will add comparisons with other sentiment analysis tool soon.
