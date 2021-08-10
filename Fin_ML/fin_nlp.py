@@ -15,10 +15,18 @@ def get_data(path):
 
 	df = pd.read_csv(path, header = None)
 	df.columns = ['label', 'text']
+	list_labels = list(set(df['label']))
+	
+	lab_dict = {}
+	for i,j in enumerate(list_labels):
+		lab_dict[j] = i
+		
+	df['label'] = df['label'].apply(lambda x: lab_dict[x])
 	c = len(set(df['label'].values))
+	
 	return df, c
 
-def classifier_model(preprocess_layer, encoder_layer, c):
+def classifier_model(preprocess_layer, encoder_layer, c, act_function):
     
     text_input = tf.keras.layers.Input(shape=(), dtype=tf.string)
     preprocessor = hub.KerasLayer(preprocess_layer)
@@ -29,7 +37,7 @@ def classifier_model(preprocess_layer, encoder_layer, c):
     pooled_output = outputs["pooled_output"]
     x = tf.keras.layers.Dense(128, activation="relu")(pooled_output)
     x = tf.keras.layers.Dropout(0.5)(x)
-    softmax_output = tf.keras.layers.Dense(c, activation='softmax')(x)
+    softmax_output = tf.keras.layers.Dense(c, activation=act_function)(x)
     model = tf.keras.Model(text_input, softmax_output)
     return model
 
