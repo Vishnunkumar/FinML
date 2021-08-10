@@ -5,24 +5,33 @@ Deep learning applications on the financial and banking world
 
 This model is trained on financial headlines dataset. I have used "small_bert_en_uncased" for training the dataset. 
 ```
-from Fin_ML import Fin_ML
-loaded_model = Fin_ML.load_classifier_model()
+from Fin_ML import fin_nlp, stocks_forecast
+loaded_model = fin_nlp.load_classifier_model()
 
 # Input is called inside the function, 
-prediction = Fin_ML.predict_classes(loaded_model)
+prediction = fin_nlp.predict_single_sentiment(model)
 
 Eg : Investors beware — vaccines aren’t a silver bullet for markets
 prediction
 prints -- ('negative', 0.9195326)
 
 # Stocks forecasting using Exponential Smoothing ("stock", "days to forecast", "Values - ['Open', 'High', 'Low', 'Close', 'Adj Close', 'Volume']")
-stocks = Fin_ML.get_stock_predictions_hwes("TSLA", 7, "Close")
+stocks = stocks_forecast.exp_smoothing_forecast("TSLA", 8, "Open")
 
 # Stocks forecasting using Prophet ("stock", "days to forecast", "Values - ['Open', 'High', 'Low', 'Close', 'Adj Close', 'Volume']")
-stocks = Fin_ML.get_stock_predictions_prophet("TSLA", 7, "Close")
+stocks = stocks_forecast.prophet_forecast("TSLA", 8, "Open")
 ```
 
-P.S : I will add comparisons with other sentiment analysis tool soon.
+### Benchmark with other sentiment tools
+I have taken a sample of 100 sentences involving financial terms and analyzed it with the various sentiment analysis tools in the market and below are the observations. Due to class imbalance in the dataset I have chose F1-score for benchmarking the tools
+
+| Sentiment analysis tool | time take for inference | F1-score |
+| ------------- | ------------- | ------------- |
+| Fin-ML  | 363 ms | 0.82 |
+| Vader-sentiment  | 17.6 ms  | 0.26 |
+| transformers-pipeline  | 4910 ms | 0.30 |
+
+P.S : I will be adding more tools for benchmarking 
 
 ## Coming soon
 
