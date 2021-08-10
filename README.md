@@ -6,6 +6,17 @@ Deep learning applications on the financial and banking world
 pip insall Fin-ML
 ```
 
+## Dependencies
+- [tensorflow](https://www.tensorflow.org/)
+- [tensorflow_hub](https://tfhub.dev/)
+- [pandas](https://pandas.pydata.org/)
+- [sklearn](https://scikit-learn.org/)
+- [numpy](https://numpy.org/)
+- [gdown](https://github.com/wkentaro/gdown)
+- [yfinance](https://pypi.org/project/yfinance/)
+- [fbprophet](https://facebook.github.io/prophet/)
+- [statsmodels](https://www.statsmodels.org/stable/index.html)
+
 ## Quickstart
 
 This model is trained on financial headlines dataset. I have used "small_bert_en_uncased" for training the dataset. 
