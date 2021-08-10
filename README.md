@@ -2,7 +2,9 @@
 Deep learning applications on the financial and banking world
 
 ## Installation
+```
 pip insall Fin-ML
+```
 
 ## Quickstart
 
