@@ -1,6 +1,9 @@
 # Fin_ML
 Deep learning applications on the financial and banking world
 
+## Installation
+pip insall Fin-ML
+
 ## Quickstart
 
 This model is trained on financial headlines dataset. I have used "small_bert_en_uncased" for training the dataset. 
