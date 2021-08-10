@@ -33,7 +33,29 @@ def classifier_model(preprocess_layer, encoder_layer, c):
     model = tf.keras.Model(text_input, softmax_output)
     return model
 
-def load_classifier_model():
+def train_classifier_model(classifier_model, train_df, loss, opt, ep, bt, v_s):
+	
+	model = classifier_model
+	opt = opt
+	loss = loss
+	model.compile(optimizer=opt,
+				  loss=loss,
+				  metrics='accuracy')
+	
+	history = model.fit(train_df['text'],
+						train_df['label'],
+						epochs=ep,
+						batch_size=bt,
+						validation_split=v_s)
+	
+	return model, history
+
+def predict_classifier_model(model, sentences):
+	preds = model.predict(sentences)
+	
+	return preds
+	
+def load_sentiment_model():
     
     url = 'https://drive.google.com/uc?id=1CFk7Zh6qbh6t48_eU0L1bcxnva81TQE5'
     l_path = '/tmp/model.h5'
