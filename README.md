@@ -36,6 +36,24 @@ stocks = stocks_forecast.exp_smoothing_forecast("TSLA", 8, "Open")
 
 # Stocks forecasting using Prophet ("stock", "days to forecast", "Values - ['Open', 'High', 'Low', 'Close', 'Adj Close', 'Volume']")
 stocks = stocks_forecast.prophet_forecast("TSLA", 8, "Open")
+
+# Training pipeline
+df, c = fin_nlp.get_data('/content/train.csv') - # make sure the first column is label and the second one is the text and also it must have only two columns
+
+# creating model
+prp = "https://tfhub.dev/tensorflow/bert_en_uncased_preprocess/3"
+enc = "https://tfhub.dev/tensorflow/mobilebert_en_uncased_L-24_H-128_B-512_A-4_F-4_OPT/1"
+model = fin_nlp.classifier_model(prp, enc, c-1, tf.keras.activations.sigmoid) - # c = number of classes, (c-1) only if its a binary classification task
+
+model, history= fin_nlp.train_classifier_model(model, 
+                                               train_df, 
+                                               tf.keras.losses.BinaryCrossentropy(), 
+                                               tf.keras.optimizers.Adam(lr=1e-4), 
+                                               10, 
+                                               32, 
+                                               0.2) - # (model, train_df, loss_function, optimizer, epochs, batch_size, validation_split)
+
+predictions = fin_nlp.predict_classifier_model(model, texts) - # (model, list of sentences)
 ```
 
 ### Benchmark with other sentiment tools
