@@ -23,7 +23,7 @@ This model is trained on financial headlines dataset. I have used "small_bert_en
 
 ### Inference pipeline 
 
-#### Sentiment analysis and stocks forecasting
+#### Financial sentiment analysis - (tweets, headlines etc)
 
 ```
 from Fin_ML import fin_nlp, stocks_forecast
@@ -35,14 +35,20 @@ prediction = fin_nlp.predict_single_sentiment(model)
 Eg : Investors beware — vaccines aren’t a silver bullet for markets
 prediction
 prints -- ('negative', 0.9195326)
+```
 
+#### Stocks forecasting 
+
+- Please note that more capabilities will be added
+
+```
 # Stocks forecasting using Exponential Smoothing ("stock", "days to forecast", "Values - ['Open', 'High', 'Low', 'Close', 'Adj Close', 'Volume']")
 stocks = stocks_forecast.exp_smoothing_forecast("TSLA", 8, "Open")
 
 # Stocks forecasting using Prophet ("stock", "days to forecast", "Values - ['Open', 'High', 'Low', 'Close', 'Adj Close', 'Volume']")
 stocks = stocks_forecast.prophet_forecast("TSLA", 8, "Open")
-
 ```
+
 ### Training pipeline
 
 #### Classification model training
@@ -65,7 +71,8 @@ model, history= fin_nlp.train_classifier_model(model,
 predictions = fin_nlp.predict_classifier_model(model, texts) - # (model, list of sentences)
 ```
 
-### Benchmark with other sentiment tools
+## Benchmark with other sentiment tools
+
 I have taken a sample of 100 sentences involving financial terms and analyzed it with the various sentiment analysis tools in the market and below are the observations. Due to class imbalance in the dataset I have chose F1-score for benchmarking the tools
 
 | Sentiment analysis tool | time take for inference | F1-score |
