@@ -69,5 +69,4 @@ P.S : I will be adding more tools for benchmarking
 
 ## Coming soon
 
-- Training functionality for classification models
 - Exploring on NER, text generation and will be adding soon in the future
