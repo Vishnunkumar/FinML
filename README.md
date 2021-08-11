@@ -22,7 +22,7 @@ pip insall Fin-ML
 This model is trained on financial headlines dataset. I have used "small_bert_en_uncased" for training the dataset. 
 ```
 from Fin_ML import fin_nlp, stocks_forecast
-loaded_model = fin_nlp.load_classifier_model()
+loaded_model = fin_nlp.load_sentiment_model()
 
 # Input is called inside the function, 
 prediction = fin_nlp.predict_single_sentiment(model)
