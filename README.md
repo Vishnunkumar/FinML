@@ -20,6 +20,11 @@ pip insall Fin-ML
 ## Quickstart
 
 This model is trained on financial headlines dataset. I have used "small_bert_en_uncased" for training the dataset. 
+
+### Inference pipeline 
+
+#### Sentiment analysis and stocks forecasting
+
 ```
 from Fin_ML import fin_nlp, stocks_forecast
 loaded_model = fin_nlp.load_sentiment_model()
@@ -37,7 +42,11 @@ stocks = stocks_forecast.exp_smoothing_forecast("TSLA", 8, "Open")
 # Stocks forecasting using Prophet ("stock", "days to forecast", "Values - ['Open', 'High', 'Low', 'Close', 'Adj Close', 'Volume']")
 stocks = stocks_forecast.prophet_forecast("TSLA", 8, "Open")
 
-# Training pipeline
+```
+### Training pipeline
+
+#### Classification model training
+```
 df, c = fin_nlp.get_data('/content/train.csv') - # make sure the first column is label and the second one is the text and also it must have only two columns
 
 # creating model
